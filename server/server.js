@@ -12,7 +12,9 @@ const {
     getBandcamp,
     getComments,
     addRequest,
-    addSong
+    addSong,
+    addPompeyShow,
+    addOtherShow
 } = require("./handlers");
 
 express()
@@ -36,6 +38,8 @@ express()
     .get("/api/get-comments", getComments)
 
     .post("/api/add-song", addSong)
+    .post("/api/add-pompey-show", addPompeyShow)
+    .post("/api/add-other-show", addOtherShow)
     .post("/api/add-request/:showid", addRequest)
     
     // .post("/api/add-showBass", addShowBass)

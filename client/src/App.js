@@ -6,6 +6,7 @@ import Header from "./Header";
 import bg from "./images/bg.jpg"
 import SongRequestor from "./SongRequestor";
 import HomePage from "./HomePage";
+import AdminPage from "./AdminPage";
 
 const App = () => {
   // const [loading, setLoading] = useState(false);
@@ -30,11 +31,11 @@ const App = () => {
 
       <Header />
       <AppContainer>
-      {/* <HomePage setShow={setShow} show={show} showClick={showClick} pompey={pompey} setPompey={setPompey}/> */}
       </AppContainer>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/requestsong/:showid" element={<SongRequestor/>} />
+          <Route path="/requestsong/:showid" element={<SongRequestor />} />
+          <Route path="/adminpage" element={<AdminPage />} />
         </Routes>
       </Box>
     </BrowserRouter>

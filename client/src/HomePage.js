@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { useEffect, useState } from "react"
 import Bio from "./Bio"
 import UpcomingShows from "./UpcomingShows"
+import { NavLink } from "react-router-dom"
 
 
 const HomePage = () => {
@@ -51,6 +52,7 @@ const HomePage = () => {
         {pompey ? 
         <>
             <ToggleSwitch onClick={handleOtherPompey}>other pompey</ToggleSwitch>
+            <NavigationLink to={"/adminpage"}>i am pompey</NavigationLink>
             <StyledBandcampPlayerRight>
                 <Title>songs</Title>
                 
@@ -127,9 +129,25 @@ const HomePage = () => {
 
 export default HomePage
 
+const NavigationLink = styled(NavLink)`
+position: fixed;
+bottom:0px;
+right:1000px;
+font-size:24px;
+font-family: 'Baloo Tamma 2', cursive;
+color:lightcyan;
+background-color: lightcoral;
+border-radius: 5px;
+text-shadow: 2.5px 1.5px rgba(128, 128, 128, 0.44);
+border:none;
+opacity:70%;
+text-decoration: none;
+padding:10px;
+`
+
 const ToggleSwitch = styled.button`
 position:fixed;
-top:200px;
+bottom:0px;
 left:1000px;
 font-size:24px;
 font-family: 'Baloo Tamma 2', cursive;

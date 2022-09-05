@@ -33,6 +33,7 @@ flex-direction: column;
 const StyledHeader = styled.img`
 /* width:100%; */
 width:1400px;
+max-width: 100%;
 position:relative;
 height:400px;
 /* border-bottom:5px black solid; */

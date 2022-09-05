@@ -70,7 +70,7 @@ const SongRequestor = () => {
                 <option value="">request a song...</option>
                     {songs.map((song) => {
                         return(
-                        <option key={song.title} value={song.title}>{song.title.toLowerCase()}</option>
+                        <option key={song.song} value={song.song}>{song.song}</option>
                         )
                 })}
 
@@ -96,14 +96,14 @@ const SongRequestor = () => {
                     <ShortWords>
                     <Name>
                         <Category>name:</Category>
-                        <div>{post.name.toLowerCase()}</div>
+                        <div>{post.name}</div>
                     </Name>
                     <Request>
                         <Category>request:</Category>
-                        <div>{post.song.toLowerCase()}</div>
+                        <div>{post.song}</div>
                     </Request>
                     </ShortWords>
-                    <Comment>{post.comment.toLowerCase()}</Comment>
+                    <Comment>{post.comment}</Comment>
                     </CommentWrapper>
                     </>
                 )}

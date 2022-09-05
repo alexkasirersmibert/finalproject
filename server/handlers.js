@@ -131,23 +131,21 @@ const getComments = async (req, res) => {
 const addSong = async (req, res) => {
     const body = req.body;
     // const id = uuidv4();
-    console.log("body added id : ", body);
+
     try {
         await client.connect();
-        const db = client.db();
-        const update = await db.collection("pompeyshows").updateOne(body);
-        console.log("update = ", update);
 
-        if (update) {
-        const insert = await db.collection("song").insertOne(body);
+        const db = client.db();
+
+        const insert = await db.collection("songs").insertOne(body);
         console.log("insert = ", insert);
         if (insert) {
             res
             .status(200)
-            .json({ status: 200, data: body });
-        }
+            .json({ status: 200, data: body, message: "song add successful" });
+        
         } else {
-        res.status(404).json({ status: 404, message: "Not found" });
+        res.status(400).json({ status: 400, message: "failed to add song" });
         }
     } catch (err) {
         console.log("addSong err: ", err);
@@ -157,6 +155,63 @@ const addSong = async (req, res) => {
 
 
 };
+
+const addPompeyShow = async (req, res) => {
+    const body = req.body;
+    // const id = uuidv4();
+
+    try {
+        await client.connect();
+
+        const db = client.db();
+
+        const insert = await db.collection("pompeyshows").insertOne(body);
+        console.log("insert = ", insert);
+        if (insert) {
+            res
+            .status(200)
+            .json({ status: 200, data: body, message: "show add successful" });
+        
+        } else {
+        res.status(400).json({ status: 400, message: "failed to add show" });
+        }
+    } catch (err) {
+        console.log("addSong err: ", err);
+        res.status(500).json({ status: 500, message: err });
+    }
+    client.close();
+
+
+};
+
+const addOtherShow = async (req, res) => {
+    const body = req.body;
+    // const id = uuidv4();
+
+    try {
+        await client.connect();
+
+        const db = client.db();
+
+        const insert = await db.collection("othershows").insertOne(body);
+        console.log("insert = ", insert);
+        if (insert) {
+            res
+            .status(200)
+            .json({ status: 200, data: body, message: "show add successful" });
+        
+        } else {
+        res.status(400).json({ status: 400, message: "failed to add show" });
+        }
+    } catch (err) {
+        console.log("addSong err: ", err);
+        res.status(500).json({ status: 500, message: err });
+    }
+    client.close();
+
+
+};
+
 
 const addRequest = async (req, res) => {
     const body = req.body;
@@ -255,5 +310,7 @@ module.exports = {
     getBandcamp,
     getComments,
     addSong,
-    addRequest
+    addPompeyShow,
+    addRequest,
+    addOtherShow
 };

@@ -25,13 +25,14 @@ const UpcomingShows = ({showDates, pompey}) => {
 
     return(
         
-        <>
+        <Wrapper>
+        
         {shows &&
             shows.map((show) => {
                 return(
                     <>
                     <Show>
-                    <Info>{show.info}</Info>
+                    <Info>{show.details}</Info>
                     <Date>{show.date}</Date>
                     at
                     <Venue>{show.venue}</Venue>
@@ -43,11 +44,17 @@ const UpcomingShows = ({showDates, pompey}) => {
                 )
             })
         }
-        </>
+        </Wrapper>
     )
 }
 
 export default UpcomingShows
+
+const Wrapper = styled.div`
+display:flex;
+flex-direction: column;
+
+`
 
 const NavigationLink = styled(NavLink)`
 text-decoration:none;
@@ -76,4 +83,7 @@ border:2px grey solid;
 border-radius:5px;
 box-shadow:2.5px 1.5px rgba(128, 128, 128, 0.44);
 padding:16px;
-gap:20px;`
+text-align: center;
+margin: 15px;
+/* gap:20px; */
+`

@@ -31,7 +31,7 @@ export default createGlobalStyle`
       border: 0;
       box-sizing: border-box;
       font-size: 100%;
-      font-family: 'Schoolbell', cursive;
+      font-family: 'Baloo Tamma 2', cursive;
       vertical-align: baseline;
   }
   /* HTML5 display-role reset for older browsers */
