@@ -99,7 +99,6 @@ const AdminPage = () => {
         .then((res) => res.json())
         .then((data) => {
             setComments(data.data)
-            // console.log(data.data)
         })
         });
 
@@ -119,7 +118,6 @@ const AdminPage = () => {
         .then((res) => res.json())
         .then((data) => {
             setIsPompey(data.data[0].loggedIn)
-            console.log(data.data[0].loggedIn)
         })
 
     }, [])

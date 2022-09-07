@@ -11,7 +11,6 @@ const CommentDisplay = () => {
         .then((res) => res.json())
         .then((data) => {
             setComments(data.data)
-            console.log(data.data)
         })
 
         

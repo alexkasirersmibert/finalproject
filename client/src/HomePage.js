@@ -29,18 +29,17 @@ const HomePage = () => {
         .then((data) => {
             setBandcamp(data.data); 
             setLoading(true);
-            // console.log(data.data)
+
             fetch("https://rest.bandsintown.com/artists/pompey/?app_id=7faceeefa4622640004a1eeef04021cd")
             .then((res) => res.json())
             .then((data) => {
                 setShows(data)
-                console.log()
             })
 
         });
 
     }, [])
-    console.log(shows)
+
 
     return(
         <>

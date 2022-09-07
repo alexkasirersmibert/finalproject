@@ -15,8 +15,6 @@ const UpcomingShows = ({showDates, pompey}) => {
         .then((data) => {
             setShows(data.data.shows); 
 
-            console.log(data.data)
-
         });
         
     }, [showDates])

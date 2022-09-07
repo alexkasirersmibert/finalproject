@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components"
 
 const SongRequestor = () => {
-    // console.log(handleChange)
 
     //replace with database containing array of songs
     const [songs, setSongs] = useState(null)
@@ -24,7 +23,7 @@ const SongRequestor = () => {
         .then((res) => res.json())
         .then((data) => {
             setComments(data.data)
-            // console.log(data.data)
+
         })
         });
         
@@ -59,7 +58,6 @@ const SongRequestor = () => {
     };
 
 
-    // console.log(comments)
     return (
         <>
         <Wrapper>
@@ -88,8 +86,6 @@ const SongRequestor = () => {
         <div>
             {/* show all requests/comments for the show once song request is submitted */}
             {comments.map((post) => {
-                console.log(post.showId === showid)
-                console.log(showid)
                 if (post.showId === showid){
                 return(
                     <>
