@@ -8,7 +8,7 @@ const UpcomingShows = ({showDates, pompey}) => {
     const [shows, setShows] = useState(null)
 
 
-    
+    //returns show data based on which side of the site you're on (leader vs sideman)
     useEffect(() => {
         fetch(`/api/${showDates}`)
         .then((res) => res.json())
@@ -28,6 +28,7 @@ const UpcomingShows = ({showDates, pompey}) => {
         <Wrapper>
         
         {shows &&
+        //returns each show
             shows.map((show) => {
                 return(
                     <>

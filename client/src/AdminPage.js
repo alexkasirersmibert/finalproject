@@ -1,38 +1,95 @@
 import { useState, useEffect } from "react"
+import { NavLink } from "react-router-dom";
+
 import styled from "styled-components"
 import ShowAdder from "./ShowAdder"
 import SongAdder from "./SongAdder"
 
 
 const AdminPage = () => {
+
     const [songAdd, setSongAdd] = useState(false)
     const [pompeyShowAdd, setPompeyShowAdd] = useState(false)
     const [comments, setComments] = useState(null)
     const [songs, setSongs] = useState(null)
     const [pompeyShows, setPompeyShows] = useState(null)
     const [otherShows, setOtherShows] = useState(null)
-    const [isPompey, setIsPompey] = useState(false)
+
     const [password, setPassword] = useState(null)
+    const [badpassword, setBadPassword] = useState(false)
+
+    const [isPompey, setIsPompey] = useState(false);
+
+    const [loggedIn, setLoggedIn] = useState(false);
     
 
+    //lets you add a song
     const showSongAdd = (e) => {
         e.preventDefault()
         setSongAdd(!songAdd)
         setPompeyShowAdd(false)
     }
+
+    //lets you add a show
     const showPompeyShowAdd = (e) => {
         e.preventDefault()
         setPompeyShowAdd(!pompeyShowAdd)
         setSongAdd(false)
     }
-    const checkPompey = (e) => {
-        e.preventDefault()
-        if (password === "yesiampompey")
-        {setIsPompey(true)}
 
+
+
+    const checkPompey = (e) => {
+        // e.preventDefault()
+
+        const loggedIn = true
+        
+        if (password === "yesiampompey")
+        {
+        fetch("/api/login", {
+            method:"PATCH",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify({loggedIn})
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Success:", data);
+            // setIsPompey(true)
+        })
+        .catch((error) => {
+            console.error("Error", error);
+        });
+    }}
+
+    const logOut = (e) => {
+        // e.preventDefault()
+
+        const loggedOut = false
+
+
+            fetch("/api/login", {
+                method:"PATCH",
+                headers:{
+                    "Content-Type":"application/json",
+                },
+                body:JSON.stringify({loggedOut})
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+
+            })
+            .catch((error) => {
+                console.error("Error", error);
+            });
     }
+        
+
 
     useEffect(() => {
+
         fetch(`/api/get-songs`)
         .then((res) => res.json())
         .then((data) => {
@@ -58,11 +115,22 @@ const AdminPage = () => {
             setOtherShows(data.data.shows); 
         })
         
+        fetch(`/api/get-login`)
+        .then((res) => res.json())
+        .then((data) => {
+            setIsPompey(data.data[0].loggedIn)
+            console.log(data.data[0].loggedIn)
+        })
+
     }, [])
+
+
+
+
     return(
 
         <Wrapper>
-            {!isPompey &&
+            {!isPompey && 
             <Container onSubmit={checkPompey}>
 
                 <Inputs>
@@ -71,18 +139,30 @@ const AdminPage = () => {
 
                         <input type="submit" value={"submit"}/>
                 </Inputs>
-
+                
+                {badpassword &&
+                <>
+                <NavigationLink to={"/"}>
+                <div>i don't think you're pompey, do you want to go back to the homepage?</div>
+                </NavigationLink>
+                </>
+                }
             </Container>
 }
-        {isPompey &&
+        {isPompey && 
         <>
             <Welcome>WELCOME POMPEY!</Welcome>
+            {/* add */}
+        <form onSubmit={logOut}>
+        <input type="submit" value={"logout?"}/>
+        </form>
         <form onSubmit={showSongAdd}>
         <input type="submit" value={"add song?"}/>
         </form>
         {songAdd &&
         <SongAdder />
         }
+        {/* add show */}
         <form onSubmit={showPompeyShowAdd}>
         <input type="submit" value={"add show?"}/>
         </form>
@@ -92,10 +172,13 @@ const AdminPage = () => {
         <ListWrapper>
         <SongList>
             <ListTitle>Songs</ListTitle>
+            {/* show song list */}
         {songs &&
         songs.map((song) => {
             return(
+                <>
                 <div>{song.song}</div>
+                </>
             )
         })}
         </SongList>
@@ -103,6 +186,7 @@ const AdminPage = () => {
         {songs && comments &&
         <>
         <ListTitle>Comments</ListTitle>
+        {/* shows all comments along with date of show */}
             {comments.map((post) => {
                 
                 return(
@@ -118,8 +202,6 @@ const AdminPage = () => {
                         <div>{post.song}</div>
                     </Request>
                     {pompeyShows.map((show) => {
-                        console.log(show._id)
-                        console.log(post.showId)
                         if(show._id === post.showId) {
                             return(
                                 <>
@@ -142,6 +224,7 @@ const AdminPage = () => {
         </CommentList>
         <Shows>
         <ListTitle>Pompey Shows</ListTitle>
+        {/* displays all shows as a leader */}
         {pompeyShows &&
             pompeyShows.map((show) => {
                 return(
@@ -160,6 +243,7 @@ const AdminPage = () => {
         </Shows>
         <Shows>
         <ListTitle>other Shows</ListTitle>
+        {/* displays all shows as a hired musician */}
         {otherShows &&
             otherShows.map((show) => {
                 return(
@@ -183,6 +267,12 @@ const AdminPage = () => {
 }
 
 export default AdminPage
+
+const NavigationLink = styled(NavLink)`
+text-decoration: none;
+color:black;
+
+`
 
 const Container = styled.form`
 display:flex;
@@ -237,6 +327,7 @@ align-items: center;
 gap:20px;
 position:relative;
 top:-100px;
+max-width: 100%;
 
 `
 

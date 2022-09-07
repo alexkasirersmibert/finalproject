@@ -8,7 +8,7 @@ const SongAdder = () => {
     const [songAdded, setSongAdded] = useState(false)
 
     const addSong = (e) => {
-        // e.preventDefault()
+        e.preventDefault()
 
 
         const postSong = {song: song, }

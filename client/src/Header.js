@@ -8,10 +8,10 @@ const Header = () => {
     return(
         <>
         <Container>
-        <StyledHeader src={header}/>
         <NavigationLink to={"/"}>
-        <StyledName>Pompey</StyledName>
+        <StyledHeader src={header}/>
         </NavigationLink>
+        <StyledName>Pompey</StyledName>
         </Container>
         </>
     );

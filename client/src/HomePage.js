@@ -30,29 +30,30 @@ const HomePage = () => {
             setBandcamp(data.data); 
             setLoading(true);
             // console.log(data.data)
-            fetch("https://rest.bandsintown.com/artists/pompey/events?app_id=7faceeefa4622640004a1eeef04021cd")
+            fetch("https://rest.bandsintown.com/artists/pompey/?app_id=7faceeefa4622640004a1eeef04021cd")
             .then((res) => res.json())
             .then((data) => {
                 setShows(data)
+                console.log()
             })
+
         });
 
     }, [])
     console.log(shows)
-    // console.log(bandcamp)
-    // console.log(pompey)
 
-    console.log(bandcamp)
     return(
         <>
         {bandcamp &&
         <Container>
         
         <Wrapper>
+            {/* show my music/shows */}
         {pompey ? 
         <>
             <ToggleSwitch onClick={handleOtherPompey}>other pompey</ToggleSwitch>
             <NavigationLink to={"/adminpage"}>i am pompey</NavigationLink>
+
             <StyledBandcampPlayerRight>
                 <Title>songs</Title>
                 
@@ -70,6 +71,11 @@ const HomePage = () => {
             <Center>
             <Bio pompey={pompey}/>
             <UpcomingShows showDates={whichPompey} pompey={pompey}/>
+            {/* link to bandsintown */}
+            {shows &&
+            <a href={`${shows.url}`} >visit bandsintown</a>
+            
+}
             </Center>
             <StyledBandcampPlayerLeft>
                 <Title>sounds</Title>
@@ -86,6 +92,7 @@ const HomePage = () => {
             </StyledBandcampPlayerLeft>
             </>
         :
+        // show artists I play with's music/shows
         <>
         <ToggleSwitch onClick={handleClick}>other pompey</ToggleSwitch>
         <StyledBandcampPlayerRight>

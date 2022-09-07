@@ -126,6 +126,27 @@ const getComments = async (req, res) => {
 
 }
 
+const getLogin = async (req, res) => {
+
+    await client.connect();
+
+    const db = client.db();
+
+    try {
+        const loggedIn = await db.collection('login').find().toArray();
+
+
+        res.status(200).json({status: 200, data: loggedIn, message: "retrieved logged in" });
+
+    }
+    catch (err){
+        console.log(err);
+        res.status(400).json({status: 400, error: err});
+        client.close();
+    }
+
+}
+
 
 // adds a new song
 const addSong = async (req, res) => {
@@ -251,57 +272,27 @@ const addRequest = async (req, res) => {
 //         const 
 //     }
 // }
+const login = async (req, res) => {
+        const isLoggedIn = req.body.loggedIn;
+      
 
+        
+      
+        try {
+          await client.connect();
+          const db = client.db();
 
-// deletes a specified reservation
-const deleteReservation = async (req, res) => {
-    const client = await new MongoClient(MONGO_URI, options);
-    const id = req.params.reservation;
-    try {
-      await client.connect();
-      const db = client.db();
-      // Get the reservation infos in order to make the flight seat available
-      // by modifying the flights collections
-      const reservation = await db.collection("reservations").findOne({ id });
-  
-      if (reservation) {
-        // Updates the flight
-        const queryFlights = {
-          flight: reservation.flight,
-          "seats.id": reservation.seat,
-        };
-        const updateSeat = { $set: { "seats.$.isAvailable": true } };
-        const updateFlights = await db
-          .collection("flights")
-          .updateOne(queryFlights, updateSeat);
-  
-        if (updateFlights) {
-          const deleteReservation = await db
-            .collection("reservations")
-            .deleteOne({ id });
-          if (deleteReservation) {
-            res.status(200).json({ status: 200, reservation: id });
-          } else {
-            res.status(404).json({
-              status: 404,
-              reservation: id,
-              message: "delete reservations has failed",
-            });
-          }
-        } else {
-          res.status(404).json({
-            status: 404,
-            reservation: id,
-            message: "update flights has failed",
-          });
+          const result = await db
+            .collection("login")
+            .updateOne({_id: "aksbass@gmail.com"}, { $set: { loggedIn: isLoggedIn } });
+          res.status(200).json({ status: 200, data: result });
+        } catch (err) {
+          res.status(404).json({ status: 404, data: err.message });
         }
-      }
-    } catch (err) {
-      console.log("deleteReservation err: ", err);
-      res.status(500).json({ status: 500, reservation: id, message: err });
-    }
-    client.close();
-};
+      };
+
+
+
 
 module.exports = {
     getShows,
@@ -312,5 +303,7 @@ module.exports = {
     addSong,
     addPompeyShow,
     addRequest,
-    addOtherShow
+    addOtherShow,
+    login,
+    getLogin
 };

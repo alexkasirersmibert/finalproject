@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components"
-import CommentDisplay from "./CommentDisplay";
 
 const SongRequestor = () => {
     // console.log(handleChange)
@@ -20,7 +19,7 @@ const SongRequestor = () => {
         .then((res) => res.json())
         .then((data) => {
             setSongs(data.data.songs);
-        
+        // gets past comments/requests to display once comment/request is submitted
         fetch(`/api/get-comments`)
         .then((res) => res.json())
         .then((data) => {
@@ -66,6 +65,7 @@ const SongRequestor = () => {
         <Wrapper>
         {songs && !songRequested &&
             <Container onSubmit={sendComment}>
+            {/* choose a song */}
             <Select onChange={handleChange} required>
                 <option value="">request a song...</option>
                     {songs.map((song) => {
@@ -73,7 +73,7 @@ const SongRequestor = () => {
                         <option key={song.song} value={song.song}>{song.song}</option>
                         )
                 })}
-
+            {/* leave name and comment */}
             </Select>
                 <Inputs>
                         <input onChange={(e) => {setName(e.target.value)}} placeholder="name?" required />
@@ -86,6 +86,7 @@ const SongRequestor = () => {
         {songs && songRequested && comments &&
         <>
         <div>
+            {/* show all requests/comments for the show once song request is submitted */}
             {comments.map((post) => {
                 console.log(post.showId === showid)
                 console.log(showid)

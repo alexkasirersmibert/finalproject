@@ -14,7 +14,9 @@ const {
     addRequest,
     addSong,
     addPompeyShow,
-    addOtherShow
+    addOtherShow,
+    login,
+    getLogin
 } = require("./handlers");
 
 express()
@@ -36,11 +38,14 @@ express()
     .get("/api/get-songs", getSongs)
     .get("/api/get-bandcamp", getBandcamp)
     .get("/api/get-comments", getComments)
+    .get("/api/get-login", getLogin)
 
     .post("/api/add-song", addSong)
     .post("/api/add-pompey-show", addPompeyShow)
     .post("/api/add-other-show", addOtherShow)
     .post("/api/add-request/:showid", addRequest)
+
+    .patch("/api/login", login)
     
     // .post("/api/add-showBass", addShowBass)
     // .post("/api/add-song", addSong)
